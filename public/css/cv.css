@@ -279,7 +279,7 @@ img {
     align-items: center;
 }
 
-@media screen and (max-width: 968px){
+@media screen and (max-width: 768px){
     .nav__menu{
         position: fixed;
         bottom: -100%;
@@ -590,8 +590,13 @@ img {
     bottom: 5rem;
 }
 
-.link_a{
-    color: black;
+.link_text{
+    color: var(--text-color);
+    text-decoration: underline;
+}
+
+.link_title{
+    color: var(--title-color);
     text-decoration: underline;
 }
 
@@ -608,7 +613,7 @@ img {
 
 
 /* Classes modified for large screen size */
-@media screen and (min-width: 968px){
+@media screen and (min-width: 768px){
     body{
         margin: 3rem 0;
     }
@@ -618,8 +623,7 @@ img {
         margin-right: auto;
     }
 
-    .l-header,
-    .scrolltop{
+    .l-header{
         display: none;
     }
 

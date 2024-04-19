@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import path from "path";
 
 import { CustomError } from "../../../domain";
-
 import { FileDownloadService } from "../../services";
 
 export class DownloadController {
@@ -20,14 +18,15 @@ export class DownloadController {
     }
 
     downloadCV = async (req: Request, res: Response) => {
-        try {
-            const indexPath = path.join(__dirname, '../../../assets/pdf/CV-BustosRoldan,MauroExequiel.pdf');
-            res.setHeader('Content-Disposition', 'attachment; filename="CV - Bustos Roldan Mauro Exequiel.pdf"');
-            res.setHeader('Content-Type', 'application/pdf');
-            res.download(indexPath);
-        } catch (error) {
-            this.handleError(error, res)
-        }
+        this.service.downloadCV()
+            .then((indexPath) => {
+                res.setHeader('Content-Disposition', 'attachment; filename="CV - Bustos Roldan Mauro Exequiel.pdf"');
+                res.setHeader('Content-Type', 'application/pdf');
+                res.download(indexPath);
+            })
+            .catch((error) => {
+                this.handleError(error, res)
+            });
     }
 
 }

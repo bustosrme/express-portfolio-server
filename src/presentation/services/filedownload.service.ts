@@ -1,4 +1,6 @@
+import path from "path";
 import puppeteer from "puppeteer";
+import { envs } from "../../config";
 
 export class FileDownloadService {
 
@@ -46,6 +48,15 @@ export class FileDownloadService {
             return pdfBuffer;
             // Descargar el PDF
 
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async downloadCV  () {
+        try {
+            const indexPath = path.join(envs.PUBLIC_PATH, 'pdf/CV-BustosRoldan,MauroExequiel.pdf');
+            return indexPath;
         } catch (error) {
             throw error;
         }
