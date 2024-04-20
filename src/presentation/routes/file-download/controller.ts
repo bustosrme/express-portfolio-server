@@ -26,7 +26,7 @@ export class DownloadController {
                 res.setHeader('Content-Type', 'application/pdf');
                 res.download(indexPath);
                 const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-                this.discordService.notifyWithIP('Someone downloaded your cv', ip);
+                this.discordService.notify('Someone downloaded your cv');
             })
             .catch((error) => {
                 this.handleError(error, res)

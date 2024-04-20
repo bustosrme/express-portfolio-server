@@ -13,7 +13,7 @@ export class AppRoutes {
         router.get('/', (req, res) => {
             const discordService = new WebhooksService();
             const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-            discordService.notifyWithIP('Someone visited the website', ip);
+            discordService.notify('Someone visited the website');
             res.sendFile(path.join(__dirname, '../../../public/html/cv.html'));
         });
 
