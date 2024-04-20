@@ -1,7 +1,6 @@
 import { Router } from "express";
 import path from "path";
 
-import { ApiRoutes } from "./api.routes";
 import { DownloadRoutes } from "./file-download/routes";
 
 import { WebhooksService } from "../services";
