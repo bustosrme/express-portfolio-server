@@ -25,7 +25,6 @@ export class DownloadController {
                 res.setHeader('Content-Disposition', 'attachment; filename="CV - Bustos Roldan Mauro Exequiel.pdf"');
                 res.setHeader('Content-Type', 'application/pdf');
                 res.download(indexPath);
-                const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
                 this.discordService.notify('Someone downloaded your cv');
             })
             .catch((error) => {

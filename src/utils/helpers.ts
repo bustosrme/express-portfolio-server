@@ -1,3 +1,8 @@
+import { Request } from "express";
+
+export const getIP = (req: Request) => {
+    return req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+}
 
 export const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -13,5 +18,5 @@ export const formattedDateNow = (location: string = 'es-AR') => {
         minute: 'numeric',
         hour12: true
     });
-
+    
 } 
