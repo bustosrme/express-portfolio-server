@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model users {
+  id             String     @id @default(uuid())
+  first_name     String?    @db.VarChar(100)
+  last_name      String?    @db.VarChar(100)
+  usersname      String?    @db.VarChar(30)
+  email          String     @unique
+  password       String     @db.VarChar(64)
+  avatar         String?    @db.VarChar(255)
+  phone          String?    @db.VarChar(15)
+  biography      String?    @db.VarChar(255)
+  birthday       DateTime?  @db.Date
+  // createdAt      DateTime   @default(now())
+  // updatedAt      DateTime   @updatedAt
+  lastLogin      DateTime?
+  isVerified     Boolean    @default(false)
+  emailValidated Boolean    @default(false)
+  role           Role       @default(USER)
+  json_data      Json?      @db.Json
+  category       category[]
+  products       products[]
+  files          files[]
+  animals        animals[]
+  links          links[]
+
+  @@index([email])
+}
+
+model animals {
+  id        String   @id @default(uuid())
+  type      String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  // createdAt DateTime @default(now())
+  // updatedAt DateTime @updatedAt
+  json_data Json?    @db.Json
+  users     users    @relation(fields: [owner], references: [id])
+  owner     String   @db.VarChar(255)
+}
+
+model associations {
+  id        String   @id @default(uuid())
+  type      String   @unique @db.VarChar(255)
+  name      String   @unique @db.VarChar(255)
+  available Boolean? @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  json_data Json?    @db.Json
+}
+
+model category {
+  id        String     @id @default(uuid())
+  name      String     @unique @db.VarChar(255)
+  available Boolean?   @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  json_data Json?      @db.Json
+  users     users      @relation(fields: [usersId], references: [id])
+  usersId   String     @db.VarChar(255)
+  products  products[]
+}
+
+model products {
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(255)
+  description String?  @db.VarChar(255)
+  price       Float?   @default(0)
+  available   Boolean? @default(true)
+  img         String?  @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  json_data   Json?    @db.Json
+  users       users    @relation(fields: [usersId], references: [id])
+  usersId     String   @db.VarChar(255)
+  category    category @relation(fields: [categoryId], references: [id])
+  categoryId  String   @db.VarChar(255)
+
+  @@index([categoryId])
+}
+
+model links {
+  id        String   @id @default(uuid())
+  original  String
+  short     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  json_data Json?    @db.Json
+  users     users    @relation(fields: [usersId], references: [id])
+  usersId   String   @db.VarChar(255)
+}
+
+model files {
+  id        String   @id @default(uuid())
+  filename  String
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  json_data Json?    @db.Json
+  users     users    @relation(fields: [usersId], references: [id])
+  usersId   String   @db.VarChar(255)
+}

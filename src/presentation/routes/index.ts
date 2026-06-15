@@ -2,6 +2,7 @@ import { Router } from "express";
 import path from "path";
 
 import { DownloadRoutes } from "./file-download/routes";
+import { ApiRoutes } from "./api.routes";
 
 import { WebhooksService } from "../services";
 
@@ -22,6 +23,7 @@ export class AppRoutes {
             res.json(new Date());
         });
 
+        router.use('/api/v1', ApiRoutes.routes);
         return router;
     }
 }
